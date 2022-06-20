@@ -14,6 +14,10 @@ from urllib import parse
 from urllib.error import HTTPError
 
 import requests
+current_work_dir = os.path.dirname(__file__)
+weight_path = ""
+weight_path = os.path.join(current_work_dir, weight_path)
+os.chdir(weight_path)
 
 # 全局变量，保存姓名
 name = None
@@ -109,6 +113,7 @@ def login():
     cookie = http.cookiejar.MozillaCookieJar(cookie_file)
     cookies = urllib.request.HTTPCookieProcessor(cookie)  # 创建一个处理cookie的handler
     opener = urllib.request.build_opener(cookies)  # 创建一个opener
+    opener.addheaders=[('User-Agent','Mozilla/5.0 (iPhone; CPU iPhone OS 15_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.4 Mobile/15E148 Safari/604.1')]
     request = urllib.request.Request(url=url)
     try:
         res = opener.open(request)
@@ -231,7 +236,7 @@ def construction_post(lng1, lat1, address):
         lat = round(float(lat) + random.uniform(-0.000100, +0.000100), 6)
         address = zddlwz
     # 通过百度地图api获取所在的省市区等
-    url = 'http://api.map.baidu.com/reverse_geocoding/v3/?ak=80smLnoLWKC9ZZWNLL6i7boKiQeVNEbq&output=json&coordtype' \
+    url = 'http://api.map.baidu.com/reverse_geocoding/v3/?ak=你的百度地图服务器ak&output=json&coordtype' \
           '=wgs84ll&location=' + str(lat) + ',' + str(lng)
     res = requests.get(url)
     log.write(res.text + '\n')
